@@ -4,13 +4,15 @@ import './style.css';
 import { useRootStore } from './store';
 import { Checkbox } from 'antd';
 import type { CheckboxChangeEvent } from 'antd/es/checkbox';
+import { getSnapshot } from 'mobx-keystone';
 
 export const App = observer(() => {
   const store = useRootStore();
   const { uiStore } = store;
 
   const onChange = (e: CheckboxChangeEvent) => {
-    console.log(`checked = ${e.target.checked}`);
+    console.log(getSnapshot(uiStore));
+    uiStore.setCheck(e.target.checked)
   };
 
   return (
