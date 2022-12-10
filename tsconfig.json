@@ -1,0 +1,10 @@
+{
+  // ...
+  "compilerOptions": {
+    // ...
+    "experimentalDecorators": true,
+    "esModuleInterop": true,
+    // MobX 5/6
+    "useDefineForClassFields": true
+  }
+}
