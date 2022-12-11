@@ -11,25 +11,32 @@ export const App = observer(() => {
   const { uiStore } = useRootStore();
 
   const onChange = (value: UiStore) => {
-    uiStore.setCheck(value.Check);
+    uiStore.setCheck1(value.Check1);
+    uiStore.setCheck2(value.Check2);
     uiStore.setInput(value.Input);
   };
 
   const { control, handleSubmit, getValues } = useForm({
-    defaultValues: {
-      Check: true,
-      Input: '',
-    },
+    defaultValues: getSnapshot(uiStore)
   });
 
  console.log(getSnapshot(uiStore))
   return (
-    <form onChange={handleSubmit(onChange)}>
+    <form onClick={handleSubmit(onChange)}>
       <Controller
-        name="Check"
+        name="Check1"
         control={control}
         render={({ field }) => (
-          <Checkbox {...field} checked={uiStore.Check}>
+          <Checkbox {...field} checked={uiStore.Check1}>
+            Checkbox
+          </Checkbox>
+        )}
+      />
+       <Controller
+        name="Check2"
+        control={control}
+        render={({ field }) => (
+          <Checkbox {...field} checked={uiStore.Check2}>
             Checkbox
           </Checkbox>
         )}
