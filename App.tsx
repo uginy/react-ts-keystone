@@ -13,9 +13,9 @@ interface IFormInputs {
 export const App = observer(() => {
   const { uiStore } = useRootStore();
 
-  const onChange = (value) => {
+  const onChange = (value: IFormInputs) => {
     console.log(getSnapshot(uiStore), value);
-    // uiStore.setCheck(value);
+    uiStore.setCheck(value.Check);
   };
 
   const { control, handleSubmit } = useForm({
@@ -25,7 +25,7 @@ export const App = observer(() => {
   });
 
   return (
-    <form onChange={handleSubmit(onChange)}>
+    <form onChange={onChange}>
       <Controller
         name="Check"
         control={control}

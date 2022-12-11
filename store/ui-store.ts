@@ -9,7 +9,7 @@ export class UiStore extends Model(
     toSnapshotProcessor(sn) {
       return {
         ...sn,
-        check: sn.Check ? 'YES' : 'NO',
+        Check: sn.Check ? 'YES' : 'NO',
       };
     },
   }
