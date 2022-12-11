@@ -3,23 +3,40 @@ import * as React from 'react';
 import './style.css';
 import { useRootStore } from './store';
 import { Checkbox } from 'antd';
-import type { CheckboxChangeEvent } from 'antd/es/checkbox';
-import { getSnapshot } from 'mobx-keystone';
+import { getSnapshot, } from 'mobx-keystone';
+import { useForm, Controller, SubmitHandler  } from "react-hook-form";
+
+interface IFormInputs {
+  Check: Boolean
+}
 
 export const App = observer(() => {
-  const store = useRootStore();
-  const { uiStore } = store;
+  const { uiStore } = useRootStore();
 
-  const onChange = (e: CheckboxChangeEvent) => {
+
+  const onChange = (v: SubmitHandler<IFormInputs>) => {
     console.log(getSnapshot(uiStore));
-    uiStore.setCheck(e.target.checked)
+    // uiStore.setCheck(v.);
   };
 
+  const { control, handleSubmit } = useForm({
+    defaultValues: {
+      firstName: '',
+      select: {}
+    }
+  });
+
   return (
-    <div>
-      <Checkbox checked={uiStore.check} onChange={onChange}>
-        Checkbox
-      </Checkbox>
-    </div>
+    <form onChange={handleSubmit(onChange)}>
+      <Controller
+        name="firstName"
+        control={control}
+        render={({ field }) => (
+          <Checkbox {...field} checked={uiStore.Check}>
+            Checkbox
+          </Checkbox>
+        )}
+      />
+    </form>
   );
 });
