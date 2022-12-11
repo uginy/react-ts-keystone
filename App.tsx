@@ -4,28 +4,32 @@ import './style.css';
 import { useRootStore } from './store';
 import { Checkbox, Input } from 'antd';
 import { applySnapshot, getSnapshot } from 'mobx-keystone';
-import { useForm, Controller, useFormState, FormProvider } from 'react-hook-form';
+import {
+  useForm,
+  Controller,
+  useFormState,
+  FormProvider,
+} from 'react-hook-form';
 
 export const App = () => {
   const { uiStore } = useRootStore();
 
-  const methods  =
-    useForm({
-      defaultValues: getSnapshot(uiStore),
-    });
+  const methods = useForm({
+    defaultValues: getSnapshot(uiStore),
+  });
 
-const { control, handleSubmit, getValues, setValue, watch } = methods;
- 
+  const { control, handleSubmit, getValues, setValue, watch } = methods;
+
   const { dirtyFields, touchedFields } = useFormState({
     control,
   });
 
-  React.useEffect(()=> {
-    watch((data)=>{
-    applySnapshot(uiStore, data);
-    console.log( 1, getSnapshot(uiStore))
-  })
-  },[])
+  React.useEffect(() => {
+    watch((data) => {
+      applySnapshot(uiStore, data);
+      console.log(getSnapshot(uiStore), getSnapshot(uiStore));
+    });
+  }, []);
 
   return (
     <FormProvider {...methods}>
@@ -43,12 +47,9 @@ const { control, handleSubmit, getValues, setValue, watch } = methods;
           name="Check2"
           control={control}
           render={({ field }) => (
-            <input
-              type="checkbox"
-              {...field}
-              checked={field.value}
-              onChange={(e) => field.onChange(e.target.checked)}
-            />
+            <Checkbox {...field} checked={field.value}>
+              Checkbox2
+            </Checkbox>
           )}
         />
         <Controller
