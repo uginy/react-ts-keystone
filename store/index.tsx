@@ -17,7 +17,7 @@ export class RootStore {
   uiStore: UiStore;
 
   constructor() {
-    this.uiStore = new UiStore({ Check: false });
+    this.uiStore = new UiStore({});
   }
 }
 
