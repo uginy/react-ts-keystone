@@ -2,8 +2,8 @@ import { observer } from 'mobx-react';
 import * as React from 'react';
 import './style.css';
 import { useRootStore } from './store';
-import { Checkbox, Input } from 'antd';
-import { applySnapshot, getSnapshot } from 'mobx-keystone';
+import { Checkbox, Input, Button } from 'antd';
+import { applySnapshot, draft, getSnapshot } from 'mobx-keystone';
 import {
   useForm,
   Controller,
@@ -24,10 +24,23 @@ export const App = () => {
     control,
   });
 
+  const onSubmit = () => {
+    // draft(uiStore).commit();
+  };
+
+  const onSave = () => {
+    console.log(draft(uiStore));
+    draft(uiStore).commit();
+  };
+
+  const onReset = () => {
+    draft(uiStore).reset();
+  };
+
   React.useEffect(() => {
     watch((data) => {
       applySnapshot(uiStore, data);
-      console.log(getSnapshot(uiStore), getSnapshot(uiStore));
+      // console.log(getSnapshot(uiStore), getSnapshot(uiStore));
     });
   }, []);
 
@@ -57,6 +70,9 @@ export const App = () => {
           control={control}
           render={({ field }) => <Input {...field} />}
         />
+        <Button type="primary" onClick={() => onSubmit()}>Send</Button>
+        <Button type="primary" onClick={() => onSave()}>Save</Button>
+        <Button type="primary" onClick={() => onReset()}>Reset</Button>
       </form>
     </FormProvider>
   );
