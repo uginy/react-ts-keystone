@@ -3,7 +3,7 @@ import * as React from 'react';
 import './style.css';
 import { useRootStore } from './store';
 import { Checkbox, Input, Button } from 'antd';
-import { applySnapshot, draft, getSnapshot } from 'mobx-keystone';
+import { applySnapshot, draft, getSnapshot, onSnapshot } from 'mobx-keystone';
 import {
   useForm,
   Controller,
@@ -25,11 +25,10 @@ export const App = () => {
   });
 
   const onSubmit = () => {
-    // draft(uiStore).commit();
+    
   };
 
   const onSave = () => {
-    console.log(draft(uiStore));
     draft(uiStore).commit();
   };
 
@@ -42,7 +41,10 @@ export const App = () => {
       applySnapshot(uiStore, data);
       // console.log(getSnapshot(uiStore), getSnapshot(uiStore));
     });
+  
   }, []);
+
+
 
   return (
     <FormProvider {...methods}>
