@@ -2,7 +2,7 @@ import { observer } from 'mobx-react';
 import * as React from 'react';
 import './style.css';
 import { useRootStore } from './store';
-import { Checkbox, Input, Button } from 'antd';
+import { Checkbox, Input, Button, Space } from 'antd';
 import { applySnapshot, draft, getSnapshot, onSnapshot } from 'mobx-keystone';
 import {
   useForm,
@@ -24,9 +24,7 @@ export const App = () => {
     control,
   });
 
-  const onSubmit = () => {
-    
-  };
+  const onSubmit = () => {};
 
   const onSave = () => {
     draft(uiStore).commit();
@@ -41,40 +39,47 @@ export const App = () => {
       applySnapshot(uiStore, data);
       // console.log(getSnapshot(uiStore), getSnapshot(uiStore));
     });
-  
   }, []);
-
-
 
   return (
     <FormProvider {...methods}>
       <form>
-        <Controller
-          name="Check1"
-          control={control}
-          render={({ field }) => (
-            <Checkbox {...field} checked={field.value}>
-              Checkbox1
-            </Checkbox>
-          )}
-        />
-        <Controller
-          name="Check2"
-          control={control}
-          render={({ field }) => (
-            <Checkbox {...field} checked={field.value}>
-              Checkbox2
-            </Checkbox>
-          )}
-        />
-        <Controller
-          name="Input"
-          control={control}
-          render={({ field }) => <Input {...field} />}
-        />
-        <Button type="primary" onClick={() => onSubmit()}>Send</Button>
-        <Button type="primary" onClick={() => onSave()}>Save</Button>
-        <Button type="primary" onClick={() => onReset()}>Reset</Button>
+        <Space direction="vertical">
+          <Controller
+            name="Check1"
+            control={control}
+            render={({ field }) => (
+              <Checkbox {...field} checked={field.value}>
+                Checkbox1
+              </Checkbox>
+            )}
+          />
+          <Controller
+            name="Check2"
+            control={control}
+            render={({ field }) => (
+              <Checkbox {...field} checked={field.value}>
+                Checkbox2
+              </Checkbox>
+            )}
+          />
+          <Controller
+            name="Input"
+            control={control}
+            render={({ field }) => <Input {...field} />}
+          />
+          <Space>
+            <Button type="primary" onClick={() => onSubmit()}>
+              Send
+            </Button>
+            <Button type="primary" onClick={() => onSave()}>
+              Save
+            </Button>
+            <Button type="primary" onClick={() => onReset()}>
+              Reset
+            </Button>
+          </Space>
+        </Space>
       </form>
     </FormProvider>
   );
